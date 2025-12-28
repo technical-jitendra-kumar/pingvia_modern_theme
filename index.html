@@ -269,31 +269,40 @@
     <div id="demo-modal" class="modal-overlay">
     <div class="modal-content">
         <button class="modal-close" id="close-modal">&times;</button>
-        <div class="modal-header">
-            <h3>Book Your Free Demo</h3>
-            <p>Our experts will show you how Pingvia can scale your business.</p>
+        
+        <div id="form-container">
+            <div class="modal-header">
+                <h3>Book Your Free Demo</h3>
+                <p>Our experts will show you how Pingvia can scale your business.</p>
+            </div>
+            <form id="demo-form">
+                <div class="form-group"><input name="Name" type="text" id="userName" placeholder="Full Name" required></div>
+                <div class="form-group"><input name="Email" type="email" id="userEmail" placeholder="Work Email" required></div>
+                <div class="form-group"><input name="Phone" type="tel" id="userPhone" placeholder="Phone Number" required></div>
+                <div class="form-group">
+                    <select id="userInterest" name="Interest" required>
+                        <option value="" disabled selected>Interested In?</option>
+                        <option value="whatsapp">WhatsApp API</option>
+                        <option value="rcs">Google RCS</option>
+                        <option value="ivr">IVR Solutions</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">Request Demo</button>
+            </form>
         </div>
-        <form id="demo-form">
-            <div class="form-group">
-                <input type="text" placeholder="Full Name" required>
+
+        <div id="success-state" style="display: none; text-align: center; padding: 20px 0;">
+            <div class="success-icon">
+                <i class="ri-checkbox-circle-fill"></i>
             </div>
-            <div class="form-group">
-                <input type="email" placeholder="Work Email" required>
-            </div>
-            <div class="form-group">
-                <input type="tel" placeholder="Phone Number" required>
-            </div>
-            <div class="form-group">
-                <select required>
-                    <option value="" disabled selected>Interested In?</option>
-                    <option value="whatsapp">WhatsApp API</option>
-                    <option value="rcs">Google RCS</option>
-                    <option value="ivr">IVR Solutions</option>
-                </select>
-            </div>
-            <button type="submit" class="btn-primary w-full">Request Demo</button>
-        </form>
+            <h3 style="margin-top: 20px; font-size: 1.8rem; color: var(--primary);">Awesome!</h3>
+            <p style="color: var(--text-muted); margin-bottom: 25px;">
+                Your request has been sent successfully. <br> Our team will call you within 24 hours.
+            </p>
+            <button class="btn-primary" id="btn-done" style="width: 100%;">Great, Thanks!</button>
+        </div>
     </div>
+</div>
 </div>
 
     <script src="/assets/js/main.js" defer></script>

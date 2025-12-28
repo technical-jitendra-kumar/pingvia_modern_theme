@@ -159,29 +159,109 @@ function initChatbot() {
     });
 }
 
-// Modal Elements
-const demoModal = document.getElementById('demo-modal');
-const openModalBtns = document.querySelectorAll('.open-demo'); // Sabhi "Book Demo" buttons par ye class honi chahiye
-const closeModalBtn = document.getElementById('close-modal');
+// =============request demo modal logic form submite success msg==================
 
-// Open Modal
+// 1. Elements Selection
+const demoModal = document.getElementById('demo-modal');
+const demoForm = document.getElementById('demo-form');
+const formContainer = document.getElementById('form-container');
+const successState = document.getElementById('success-state');
+const openModalBtns = document.querySelectorAll('.open-demo');
+const closeModalBtn = document.getElementById('close-modal');
+const btnDone = document.getElementById('btn-done');
+
+// 2. Open Modal Logic
 openModalBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
         e.preventDefault();
         demoModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // Stop background scrolling
+        document.body.style.overflow = 'hidden'; // Stop scroll
     });
 });
 
-// Close Modal
+// 3. Form Submit Logic (Main Logic)
+demoForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    // Yahan hum form hide karke success message dikhayenge
+    formContainer.style.display = 'none';
+    successState.style.display = 'block';
+});
+
+// 4. Close Modal Logic
 const hideModal = () => {
     demoModal.style.display = 'none';
-    document.body.style.overflow = 'auto'; // Re-enable scrolling
+    document.body.style.overflow = 'auto'; // Resume scroll
+    
+    // Reset modal state for next time
+    setTimeout(() => {
+        formContainer.style.display = 'block';
+        successState.style.display = 'none';
+        demoForm.reset();
+    }, 500);
 };
 
 closeModalBtn?.addEventListener('click', hideModal);
+btnDone?.addEventListener('click', hideModal);
 
-// Close on outside click
+// Close on background click
 window.addEventListener('click', (e) => {
     if (e.target === demoModal) hideModal();
+});
+
+// ========> demo model data send to google sheets logic <======
+
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzzEkN0P-8lIdGeRVlsWvP9WNaxZTSmVe4SyyGWIzHhetvjJu86AlGhc5c_9ZqJWgYRGQ/exec'; 
+
+// const demoForm = document.getElementById('demo-form');
+
+demoForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Sending...";
+
+    // Data ko URL parameters mein badalna
+    const formData = new FormData(demoForm);
+    const params = new URLSearchParams(formData).toString();
+    const finalUrl = SCRIPT_URL + "?" + params;
+
+    // GET request bhej rahe hain kyunki ye zyada reliable hai Sheets ke liye
+    fetch(finalUrl)
+    .then(res => res.json())
+    .then(data => {
+        if(data.result === "success") {
+            document.getElementById('form-container').style.display = 'none';
+            document.getElementById('success-state').style.display = 'block';
+        } else {
+            alert("Error: " + data.error);
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Network Error! Check your internet or Script URL.");
+    })
+    .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Request Demo";
+    });
+});
+
+
+// ======> contact us page form success message logic <======
+
+// Contact Page Form Logic
+const contactForm = document.getElementById('contact-form-main');
+const contactSuccess = document.getElementById('contact-success');
+
+contactForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Form ko hide karein aur Success message dikhayein
+    contactForm.style.display = 'none';
+    contactSuccess.style.display = 'block';
+
+    // Auto-scroll to top of the card so user sees the message
+    contactSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
 });
