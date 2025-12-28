@@ -211,7 +211,7 @@ window.addEventListener('click', (e) => {
 
 // ========> demo model data send to google sheets logic <======
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzzEkN0P-8lIdGeRVlsWvP9WNaxZTSmVe4SyyGWIzHhetvjJu86AlGhc5c_9ZqJWgYRGQ/exec'; 
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyB1soHEIQ-7k8vkZ7MRwKgOW3pmUpcHYIBDm2kSTlfEEAPGOmo0aqYWsDlQmyHMtoYGw/exec'; 
 
 // const demoForm = document.getElementById('demo-form');
 
@@ -264,4 +264,32 @@ contactForm?.addEventListener('submit', (e) => {
 
     // Auto-scroll to top of the card so user sees the message
     contactSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+
+// ======================== contact us form data send to google sheets logic ========================
+const CONTACT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyB1soHEIQ-7k8vkZ7MRwKgOW3pmUpcHYIBDm2kSTlfEEAPGOmo0aqYWsDlQmyHMtoYGw/exec';
+
+document.getElementById('contact-form-main')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const btn = form.querySelector('button');
+    
+    btn.disabled = true;
+    btn.innerText = "Sending...";
+
+    const params = new URLSearchParams(new FormData(form)).toString();
+    
+    fetch(CONTACT_SCRIPT_URL + "?" + params)
+    .then(res => res.json())
+    .then(data => {
+        if(data.result === "success") {
+            form.style.display = 'none';
+            document.getElementById('contact-success').style.display = 'block';
+        }
+    })
+    .catch(err => alert("Error sending message!"))
+    .finally(() => {
+        btn.disabled = false;
+        btn.innerText = "Send Message";
+    });
 });
