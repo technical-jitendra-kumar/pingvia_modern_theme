@@ -1,0 +1,127 @@
+/* ===============================
+   PRICING PAGE - COMPACT & SLEEK
+================================ */
+.pricing-hero {
+    padding: 80px 0 40px;
+    text-align: center;
+    background: radial-gradient(circle at top left, #f0f9ff 0%, #ffffff 60%);
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px; /* Thoda kam gap */
+    align-items: stretch; /* Sabhi cards ki height barabar rahegi */
+}
+
+.pricing-card {
+    background: white;
+    padding: 30px; /* Padding kam kar di height choti karne ke liye */
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    position: relative;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Content aur Button ke beech space auto adjust hoga */
+}
+
+.pricing-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Featured Plan - No Scaling to keep visibility clean */
+.pricing-card.featured {
+    border: 2px solid var(--accent);
+    background: linear-gradient(180deg, #ffffff 0%, #f7fcff 100%);
+}
+
+.popular-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--accent);
+    color: white;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+/* Plan Header - Sleek Text */
+.plan-header h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--primary);
+}
+
+.price {
+    font-size: 2.2rem; /* Font size thoda chota kiya */
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+.price small {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.plan-header p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+/* Features List - Compact dots */
+.pricing-features {
+    list-style: none;
+    margin-bottom: 25px;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+}
+
+.pricing-features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px; /* Gap kam kiya */
+    font-size: 0.9rem;
+}
+
+.pricing-features li i {
+    color: #22c55e;
+    font-size: 1rem;
+}
+
+/* Buttons - Full Width Sleek */
+.btn-outline, .btn-primary {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+}
+
+.btn-outline {
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Footer Note */
+.pricing-footer-note {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .pricing-card.featured { transform: scale(1); }
+    .pricing-card.featured:hover { transform: translateY(-10px); }
+    .pricing-hero h1 { font-size: 2.5rem; }
+}

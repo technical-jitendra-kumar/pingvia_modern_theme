@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Pingvia Solutions</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/style.css"> <link rel="stylesheet" href="../assets/css/pages/about.css"> </head>
+<body class="about-page">
+
+    <header class="header">
+        <div class="container navbar-wrapper">
+            <div class="logo">
+                <a href="../index.html" class="logo-link">
+                    <img src="../assets/images/logo.png" alt="Logo" />
+                    <span class="brand-name">Pingvia <span class="text-accent">Solutions</span></span>
+                </a>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="../index.html#services" class="nav-link">Services</a></li>
+                    <li><a href="../pricing/index.html" class="nav-link">Pricing</a></li>
+                    <li><a href="./index.html" class="nav-link active">About</a></li>
+                    <li><a href="../contact/index.html" class="btn-primary">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="hamburger" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="about-hero">
+            <div class="container">
+                <span class="small-title">OUR STORY</span>
+                <h1>Empowering Businesses Through <br><span class="text-gradient">Smart Communication</span></h1>
+                <p>We bridge the gap between businesses and customers using cutting-edge automation and AI-driven solutions.</p>
+            </div>
+        </section>
+
+        <section class="mission-vision section">
+            <div class="container grid-2">
+                <div class="content-box">
+                    <h2 class="section-title">Our Mission</h2>
+                    <p>At Pingvia Solutions, our mission is to simplify complex business communication. We provide scalable tools like WhatsApp API and RCS to help SMEs grow faster with zero friction.</p>
+                    <ul class="check-list">
+                        <li><i class="ri-checkbox-circle-fill"></i> Innovation First Approach</li>
+                        <li><i class="ri-checkbox-circle-fill"></i> Customer-Centric Support</li>
+                        <li><i class="ri-checkbox-circle-fill"></i> Reliable & Secure Infrastructure</li>
+                    </ul>
+                </div>
+                <div class="image-box">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800" alt="Team working" class="rounded-img">
+                </div>
+            </div>
+        </section>
+
+        <section class="values section bg-light">
+            <div class="container">
+                <div class="section-header center">
+                    <h2 class="section-title">Our Core Values</h2>
+                </div>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <i class="ri-lightbulb-line"></i>
+                        <h3>Innovation</h3>
+                        <p>Constantly evolving our technology to keep you ahead of the curve.</p>
+                    </div>
+                    <div class="value-card">
+                        <i class="ri-shield-user-line"></i>
+                        <h3>Integrity</h3>
+                        <p>Building trust through transparent pricing and official compliances.</p>
+                    </div>
+                    <div class="value-card">
+                        <i class="ri-rocket-line"></i>
+                        <h3>Impact</h3>
+                        <p>Our success is measured by the growth and efficiency of our clients.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+        <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Pingvia Solutions</h4>
+                    <p>Smart business communication for the modern age.</p>
+                    <div class="footer-socials">
+                        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">WhatsApp API</a></li>
+                        <li><a href="#services">Google RCS</a></li>
+                        <li><a href="#services">IVR Solutions</a></li>
+                        <li><a href="#services">Web Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="./about/index.html">About Us</a></li>
+                        <li><a href="./contact/index.html">Contact</a></li>
+                        <li><a href="./privacy/index.html">Privacy Policy</a></li>
+                        <li><a href="./terms/index.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Pingvia Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="chatbot">
+        <button id="chatbot-toggle">🤖</button>
+        <div id="chatbot-window">
+            <div class="chatbot-header">
+                <span>AI Assistant</span>
+                <button id="chatbot-close">&times;</button>
+            </div>
+            <div class="chatbot-messages" id="chatbot-messages">
+                <div class="bot-message">Hi! How can I help you today?</div>
+            </div>
+            <form id="chatbot-form">
+                <input type="text" id="chatbot-input" placeholder="Ask anything..." />
+            </form>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

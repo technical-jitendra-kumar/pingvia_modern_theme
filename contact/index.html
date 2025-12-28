@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Pingvia Solutions</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/style.css"> <link rel="stylesheet" href="../assets/css/pages/contact.css"> </head>
+<body>
+
+    <header class="header">
+        <div class="container navbar-wrapper">
+            <div class="logo">
+                <a href="../index.html" class="logo-link">
+                    <img src="../assets/images/logo.png" alt="Logo" />
+                    <span class="brand-name">Pingvia <span class="text-accent">Solutions</span></span>
+                </a>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="../index.html#services" class="nav-link">Services</a></li>
+                    <li><a href="../pricing/index.html" class="nav-link">Pricing</a></li>
+                    <li><a href="../about/index.html" class="nav-link">About</a></li>
+                    <li><a href="./index.html" class="btn-primary">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="hamburger" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="contact-hero">
+            <div class="container">
+                <span class="small-title">GET IN TOUCH</span>
+                <h1>Let’s Talk About Your <span class="text-gradient">Growth</span></h1>
+                <p>Have a question or ready to automate your business communication?</p>
+            </div>
+        </section>
+
+        <section class="contact-main section">
+            <div class="container">
+                <div class="contact-grid-wrapper">
+                    
+                    <div class="contact-info-panel">
+                        <h3>Connect With Us</h3>
+                        <div class="info-list">
+                            <div class="info-box">
+                                <i class="ri-mail-send-line"></i>
+                                <span>info@pingviasolutions.com</span>
+                            </div>
+                            <div class="info-box">
+                                <i class="ri-phone-fill"></i>
+                                <span>+91 XXXXXXXXXX</span>
+                            </div>
+                            <div class="info-box">
+                                <i class="ri-map-pin-2-fill"></i>
+                                <span>Lucknow, India</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-card">
+                        <form id="contact-form-main">
+                            <div class="input-row">
+                                <input type="text" placeholder="Full Name" required>
+                                <input type="email" placeholder="Email Address" required>
+                            </div>
+                            <select required>
+                                <option value="" disabled selected>Interested Service</option>
+                                <option value="whatsapp">WhatsApp API</option>
+                                <option value="rcs">Google RCS</option>
+                                <option value="ivr">IVR Solutions</option>
+                            </select>
+                            <textarea rows="5" placeholder="Tell us more about your business needs..."></textarea>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="otp-in" required>
+                                <label for="otp-in">I agree to be contacted via WhatsApp, SMS, and Email for business updates.</label>
+                            </div>
+
+                            <button type="submit" class="btn-primary w-full">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+        <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Pingvia Solutions</h4>
+                    <p>Smart business communication for the modern age.</p>
+                    <div class="footer-socials">
+                        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">WhatsApp API</a></li>
+                        <li><a href="#services">Google RCS</a></li>
+                        <li><a href="#services">IVR Solutions</a></li>
+                        <li><a href="#services">Web Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="./about/index.html">About Us</a></li>
+                        <li><a href="./contact/index.html">Contact</a></li>
+                        <li><a href="./privacy/index.html">Privacy Policy</a></li>
+                        <li><a href="./terms/index.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Pingvia Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="chatbot">
+        <button id="chatbot-toggle">🤖</button>
+        <div id="chatbot-window">
+            <div class="chatbot-header">
+                <span>AI Assistant</span>
+                <button id="chatbot-close">&times;</button>
+            </div>
+            <div class="chatbot-messages" id="chatbot-messages">
+                <div class="bot-message">Hi! How can I help you today?</div>
+            </div>
+            <form id="chatbot-form">
+                <input type="text" id="chatbot-input" placeholder="Ask anything..." />
+            </form>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
