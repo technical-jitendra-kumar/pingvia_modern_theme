@@ -118,15 +118,74 @@ body {
     }
 }
 
-/* Hero */
-.hero { padding: 6rem 0; background: radial-gradient(circle at top right, #e0f2fe, transparent); }
-.hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 3rem; align-items: center; }
+/* Hero
+/* .hero { padding: 6rem 0; background: radial-gradient(circle at top right, #e0f2fe, transparent); } */
+/* .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 3rem; align-items: center; }
 .hero h1 { font-size: 3.5rem; line-height: 1.1; font-weight: 800; margin-bottom: 1.5rem; }
-.badge { background: #e0f2fe; color: var(--accent-dark); padding: 0.4rem 1rem; border-radius: 99px; font-size: 0.8rem; font-weight: 700; margin-bottom: 1rem; display: inline-block; }
+.badge { background: #e0f2fe; color: var(--accent-dark); padding: 0.4rem 1rem; border-radius: 99px; font-size: 0.8rem; font-weight: 700; margin-bottom: 1rem; display: inline-block; } */
+
+
+
+/* Hero Section Base */
+/* .hero {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-top: 80px; 
+} */
+
+/* Background Slider */
+/* .hero-bg-slider {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+} */
+
+/* .bg-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+} */
+
+/* .bg-slide.active {
+    opacity: 1;
+} */
+
+/* Dark Overlay taaki Orbit aur Text Glow karein */
+/* .hero-bg-slider::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.7) 100%);
+} */
+
+/* Container and Content */
+/* .hero-grid {
+    position: relative;
+    z-index: 2; Content ko upar rakhne ke liye 
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 40px;
+    align-items: center;
+} */
+
+/* Mobile Responsive */
+/* @media (max-width: 991px) {
+    .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+} */
+
 /* ===============================
    HERO ORBIT ANIMATION (FIXED)
 ================================ */
-.hero-visual {
+/* .hero-visual {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -140,20 +199,20 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
 
 /* The Rotating Ring */
-.orbit-ring {
+/* .orbit-ring {
     position: absolute;
     width: 100%;
     height: 100%;
     border: 2px dashed rgba(14, 165, 233, 0.2);
     border-radius: 50%;
     animation: rotateOrbit 20s linear infinite;
-}
+} */
 
 /* Individual Orbit Items */
-.orbit-item {
+/* .orbit-item {
     position: absolute;
     width: 60px;
     height: 60px;
@@ -164,18 +223,18 @@ body {
     justify-content: center;
     box-shadow: var(--shadow-md);
     font-size: 1.5rem;
-    /* This keeps the icons upright while the ring rotates */
+
     animation: counterRotate 20s linear infinite;
-}
+} */
 
 /* Positioning Icons on the Ring */
-.whatsapp { top: -30px; left: calc(50% - 30px); color: #25D366; }
+/* .whatsapp { top: -30px; left: calc(50% - 30px); color: #25D366; }
 .sms      { right: -30px; top: calc(50% - 30px); color: #F59E0B; }
 .rcs      { bottom: -30px; left: calc(50% - 30px); color: #2563EB; }
-.ivr      { left: -30px; top: calc(50% - 30px); color: #8B5CF6; }
+.ivr      { left: -30px; top: calc(50% - 30px); color: #8B5CF6; } */
 
 /* The Static Center Logo */
-.orbit-center {
+/* .orbit-center {
     width: 100px;
     height: 100px;
     background: var(--white);
@@ -193,10 +252,10 @@ body {
     height: 70%;
     object-fit: contain;
     border-radius: 50%;
-}
+} */
 
 /* KEYFRAMES */
-@keyframes rotateOrbit {
+/* @keyframes rotateOrbit {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
@@ -204,16 +263,16 @@ body {
 @keyframes counterRotate {
     from { transform: rotate(0deg); }
     to { transform: rotate(-360deg); }
-}
+} */
 
 /* Hover to Pause */
-.orbit-wrapper:hover .orbit-ring,
+/* .orbit-wrapper:hover .orbit-ring,
 .orbit-wrapper:hover .orbit-item {
     animation-play-state: paused;
-}
+} */
 
 /* Responsive Scaling for Mobile */
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
     .orbit-wrapper {
         width: 250px;
         height: 250px;
@@ -223,7 +282,181 @@ body {
         height: 50px;
         font-size: 1.2rem;
     }
+}  */
+
+/* ===============================
+   HERO SECTION (FIXED & COMBINED)
+================================ */
+.hero {
+    position: relative;
+    /* Height ko 70vh se badal kar professional limit me kar diya */
+    min-height: 80vh; 
+    max-height: 800px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 100px 0;
+    background: #0f172a; /* Fallback color */
 }
+
+/* Background Slider Container */
+.hero-bg-slider {
+    position: absolute;
+    inset: 0;
+    z-index: 1; 
+}
+
+.bg-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.bg-slide.active {
+    opacity: 1;
+}
+
+/* DARK OVERLAY (Text Visibility Fix) */
+.hero-bg-slider::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* Left side jaha text hai waha 95% dark hai taaki white text chamke */
+    background: linear-gradient(
+        to right, 
+        rgba(15, 23, 42, 0.95) 20%, 
+        rgba(15, 23, 42, 0.8) 60%,
+        rgba(15, 23, 42, 0.7) 100%
+    );
+    z-index: 2;
+}
+
+/* Hero Content Grid */
+.hero-grid {
+    position: relative;
+    z-index: 10; /* Overlay ke upar content lane ke liye */
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 3rem;
+    align-items: center;
+    width: 100%;
+}
+
+/* Text Styling Fixes */
+.hero h1 { 
+    font-size: 3.5rem; 
+    line-height: 1.1; 
+    font-weight: 800; 
+    margin-bottom: 1.5rem; 
+    color: #ffffff; /* Explicitly white */
+}
+
+.hero p {
+    color: rgba(255, 255, 255, 0.8); /* Light text for readability */
+    font-size: 1.1rem;
+    max-width: 550px;
+    margin-bottom: 2rem;
+}
+
+.badge { 
+    background: rgba(224, 242, 254, 0.15); /* Glass effect badge */
+    color: #7dd3fc; 
+    backdrop-filter: blur(5px);
+    padding: 0.4rem 1rem; 
+    border-radius: 99px; 
+    font-size: 0.8rem; 
+    font-weight: 700; 
+    margin-bottom: 1rem; 
+    display: inline-block; 
+    border: 1px solid rgba(14, 165, 233, 0.3);
+}
+
+/* ===============================
+   HERO ORBIT ANIMATION
+================================ */
+.hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+.orbit-wrapper {
+    position: relative;
+    width: 350px;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Orbit ke piche halka glow */
+    filter: drop-shadow(0 0 30px rgba(14, 165, 233, 0.2));
+}
+
+.orbit-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 2px dashed rgba(14, 165, 233, 0.3);
+    border-radius: 50%;
+    animation: rotateOrbit 20s linear infinite;
+}
+
+.orbit-item {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    font-size: 1.5rem;
+    animation: counterRotate 20s linear infinite;
+}
+
+/* Positioning Icons */
+.whatsapp { top: -30px; left: calc(50% - 30px); color: #25D366; }
+.sms      { right: -30px; top: calc(50% - 30px); color: #F59E0B; }
+.rcs      { bottom: -30px; left: calc(50% - 30px); color: #2563EB; }
+.ivr      { left: -30px; top: calc(50% - 30px); color: #8B5CF6; }
+
+.orbit-center {
+    width: 100px;
+    height: 100px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    box-shadow: 0 0 40px rgba(14, 165, 233, 0.4);
+    border: 3px solid rgba(14, 165, 233, 0.5);
+}
+
+.orbit-center img { width: 70%; height: 70%; object-fit: contain; }
+
+@keyframes rotateOrbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes counterRotate { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+
+/* Mobile Responsiveness */
+@media (max-width: 991px) {
+    .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 4rem; }
+    .hero h1 { font-size: 2.8rem; }
+    .hero p { margin: 0 auto 2rem; }
+    .hero { height: auto; padding: 120px 0 80px; }
+}
+
+@media (max-width: 480px) {
+    .orbit-wrapper { width: 260px; height: 260px; }
+    .orbit-item { width: 50px; height: 50px; font-size: 1.2rem; }
+    .hero h1 { font-size: 2.2rem; }
+}
+
+
 /* ==========================================================================
    4. GRIDS (Services, Steps, Why Us)
    ========================================================================== */

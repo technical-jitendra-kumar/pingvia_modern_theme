@@ -312,3 +312,28 @@ document.getElementById('contact-form-main')?.addEventListener('submit', functio
         btn.innerText = "Send Message";
     });
 });
+
+
+
+// =============== hero section background and badge styles commented out ===============
+
+function initHeroBgSlider() {
+    const slides = document.querySelectorAll('.bg-slide');
+    if (slides.length === 0) return;
+
+    let currentSlide = 0;
+
+    setInterval(() => {
+        // Current slide hatao
+        slides[currentSlide].classList.remove('active');
+        
+        // Next slide par jao
+        currentSlide = (currentSlide + 1) % slides.length;
+        
+        // Next slide dikhao
+        slides[currentSlide].classList.add('active');
+    }, 5000); // 5 second mein slide change hogi
+}
+
+// Start the slider
+document.addEventListener('DOMContentLoaded', initHeroBgSlider);
