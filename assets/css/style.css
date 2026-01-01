@@ -248,6 +248,74 @@ body {
 .dot { width: 10px; height: 10px; background: #cbd5e1; border-radius: 50%; display: inline-block; margin: 0 5px; cursor: pointer; }
 .dot.active { background: var(--accent); width: 25px; border-radius: 10px; }
 
+/* ==================frequently asked questions ==========================================================  */
+/* .faq-item { margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+.faq-question { display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 600; }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; margin-top: 0.5rem; color: var(--text-muted); }
+.faq-item.active .faq-answer { max-height: 200px; } */
+/* ===============================
+   MODERN FAQ STYLING
+================================ */
+.faq-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background: var(--white);
+    margin-bottom: 15px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.faq-question {
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 1.1rem;
+    transition: var(--transition);
+}
+
+.faq-question i {
+    font-size: 1.5rem;
+    color: var(--accent);
+    transition: transform 0.3s ease;
+}
+
+.faq-answer {
+    max-height: 0; /* Initially hidden */
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #fdfdfd;
+}
+
+.faq-answer p {
+    padding: 0 25px 25px 25px;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+/* Active State */
+.faq-item.active {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md);
+}
+
+.faq-item.active i {
+    transform: rotate(45deg); /* Plus becomes Cross */
+    color: var(--primary);
+}
+
+.faq-item.active .faq-answer {
+    max-height: 200px; /* Adjust based on content */
+}
+
 /* ==========================================================================
    6. CTA SECTION
    ========================================================================== */

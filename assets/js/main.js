@@ -114,6 +114,25 @@ function initTestimonialSlider() {
     });
 }
 
+// ======================= frequently asked questions accordion logic =======================
+// FAQ Accordion Logic
+const faqItems = document.querySelectorAll('.faq-item');
+
+faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    
+    question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Pehle se khule hue kisi bhi FAQ ko band karein
+        faqItems.forEach(otherItem => otherItem.classList.remove('active'));
+        
+        // Agar current item pehle se active nahi tha, toh usey open karein
+        if (!isActive) {
+            item.classList.add('active');
+        }
+    });
+});
 /* =====================================
    CHATBOT LOGIC
 ===================================== */
