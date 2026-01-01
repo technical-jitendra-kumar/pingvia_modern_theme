@@ -355,8 +355,10 @@
 
         <section class="cta-section">
             <div class="cta-bg-slider">
-                <div class="cta-slide active" style="background-image: url('/assets/images/carlos-muza-hpjSkU2UYSU-unsplash.jpg');"></div>
-                <div class="cta-slide" style="background-image: url('/assets/images/myriam-jessier-eveI7MOcSmw-unsplash.jpg');"></div>
+                <div class="cta-slide active"
+                    style="background-image: url('/assets/images/carlos-muza-hpjSkU2UYSU-unsplash.jpg');"></div>
+                <div class="cta-slide"
+                    style="background-image: url('/assets/images/myriam-jessier-eveI7MOcSmw-unsplash.jpg');"></div>
             </div>
 
             <div class="container">
@@ -408,17 +410,28 @@
     </footer>
 
     <div id="chatbot">
-        <button id="chatbot-toggle">🌐</button>
+        <button id="chatbot-toggle">
+            <img src="/assets/images/Gemini_Generated_Image_8yrdrm8yrdrm8yrd.png" alt="Pingvia Bot">
+        </button>
+
         <div id="chatbot-window">
             <div class="chatbot-header">
-                <span>AI Assistant</span>
-                <button id="chatbot-close">&times;</button>
+                <div class="header-info">
+                    <div class="online-indicator"></div>
+                    <span>Pingvia AI Assistant</span>
+                </div>
+                <button id="chatbot-close"><i class="ri-close-line"></i></button>
             </div>
+
             <div class="chatbot-messages" id="chatbot-messages">
-                <div class="bot-message">Hi! How can I help you today?</div>
+                <div class="bot-message">Hi there! 👋 How can I help you scale your business today?</div>
             </div>
+
             <form id="chatbot-form">
-                <input type="text" id="chatbot-input" placeholder="Ask anything..." />
+                <input type="text" id="chatbot-input" placeholder="Type your message..." autocomplete="off" />
+                <button type="submit" id="chatbot-send">
+                    <i class="ri-send-plane-fill"></i>
+                </button>
             </form>
         </div>
     </div>
