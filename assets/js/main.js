@@ -315,25 +315,33 @@ document.getElementById('contact-form-main')?.addEventListener('submit', functio
 
 
 
-// =============== hero section background and badge styles commented out ===============
-
+// Function for Hero Slider
 function initHeroBgSlider() {
     const slides = document.querySelectorAll('.bg-slide');
     if (slides.length === 0) return;
-
     let currentSlide = 0;
-
     setInterval(() => {
-        // Current slide hatao
         slides[currentSlide].classList.remove('active');
-        
-        // Next slide par jao
         currentSlide = (currentSlide + 1) % slides.length;
-        
-        // Next slide dikhao
         slides[currentSlide].classList.add('active');
-    }, 5000); // 5 second mein slide change hogi
+    }, 5000);
 }
 
-// Start the slider
-document.addEventListener('DOMContentLoaded', initHeroBgSlider);
+// Function for CTA Slider
+function initCtaBgSlider() {
+    const ctaSlides = document.querySelectorAll('.cta-slide');
+    if (ctaSlides.length === 0) return;
+    let currentCtaSlide = 0;
+    setInterval(() => {
+        ctaSlides[currentCtaSlide].classList.remove('active');
+        currentCtaSlide = (currentCtaSlide + 1) % ctaSlides.length;
+        ctaSlides[currentCtaSlide].classList.add('active');
+    }, 6000);
+}
+
+// Ek hi baar DOMContentLoaded call karein
+document.addEventListener('DOMContentLoaded', () => {
+    initHeroBgSlider();
+    initCtaBgSlider();
+    console.log("Sliders initialized successfully!"); // Debugging ke liye
+});

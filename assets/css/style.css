@@ -456,7 +456,50 @@ body {
     .hero h1 { font-size: 2.2rem; }
 }
 
+/* -------------> our process  -------------> */
+.steps-grid {
+    display: grid;
+    /* Desktop par 3 cards, tablet par 2, aur mobile par 1 */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 2rem;
+    margin-top: 3rem;
+}
 
+@media (max-width: 991px) {
+    .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.step-card {
+    background: var(--white);
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    transition: var(--transition);
+    position: relative;
+}
+
+.step-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent);
+    box-shadow: var(--shadow-lg);
+}
+
+.step-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: rgba(14, 165, 233, 0.1); /* Subtle large number */
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
 /* ==========================================================================
    4. GRIDS (Services, Steps, Why Us)
    ========================================================================== */
@@ -468,6 +511,7 @@ body {
 .service-card:hover, .feature-item:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: var(--shadow-md); }
 .card-icon, .feature-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem; display: block;}
 .step-number { font-size: 2rem; font-weight: 800; color: var(--accent); opacity: 0.3; margin-bottom: 0.5rem; }
+
 
 /* ==========================================================================
    5. TESTIMONIALS SLIDER
@@ -552,17 +596,105 @@ body {
 /* ==========================================================================
    6. CTA SECTION
    ========================================================================== */
-.cta-section { padding: 80px 0; background: var(--primary); overflow: hidden; }
+/* .cta-section { padding: 80px 0; background: var(--primary); overflow: hidden; }
 .cta-box { 
     text-align: center; background: rgba(255, 255, 255, 0.05); padding: 50px; 
     border-radius: var(--radius-lg); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
 }
 .cta-box h2  { color: var(--white); font-size: 2.5rem; margin-bottom: 2rem; }
 #cta-para {
-    color: #0EA5E9; /* Lighter text for better contrast */
+    color: #0EA5E9;
     font-size: 1.1rem;
     margin-bottom: 2rem;
+} */
+
+/* CTA Section - Height Fixed & Optimized */
+.cta-section { 
+    position: relative !important;
+    height: 450px; /* Fixed height taaki clash na ho */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Bahar jata hua koi bhi element hide ho jayega */
+    background: #0f172a; /* Fallback dark color */
+    border-bottom: 2px solid;
+    border-image: linear-gradient(to right, transparent, var(--accent), transparent) 1;
 }
+
+/* Background Slider */
+.cta-bg-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Piche rahega */
+}
+
+.cta-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover !important;
+    background-position: center !important;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+.cta-slide.active {
+    opacity: 1;
+}
+
+/* Dark Overlay - Text ko clear dikhane ke liye */
+.cta-bg-slider::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* background: rgba(15, 23, 42, 0.85); */
+    background: radial-gradient(circle, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.95) 100%);
+    z-index: 2;
+}
+
+/* Content Box - Iski height automatic rahegi */
+.cta-box { 
+    position: relative;
+    z-index: 10; /* Sabse upar */
+    text-align: center; 
+    background: rgba(255, 255, 255, 0.05); 
+    padding: 40px 30px; 
+    border-radius: var(--radius-lg); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(10px);
+    max-width: 800px;
+    width: 90%; /* Mobile ke liye safe */
+    margin: 0 auto;
+}
+
+.cta-box h2 { 
+    color: #ffffff; 
+    font-size: 2.2rem; 
+    margin-bottom: 1rem; 
+    line-height: 1.2;
+}
+#cta-para {
+    color: #ffffff !important; 
+    font-size: 1.2rem;
+    margin-bottom: 2.5rem;
+    font-weight: 500;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); 
+    opacity: 0.9; 
+    
+    line-height: 1.6;
+}
+@media (max-width: 768px) {
+    .cta-section {
+        height: 400px; 
+    }
+    .cta-box h2 {
+        font-size: 1.8rem;
+    }
+}
+
+
 
 /* ==========================================================================
    7. CHATBOT WIDGET (FIXED)
