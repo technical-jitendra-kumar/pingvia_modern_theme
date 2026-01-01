@@ -47,6 +47,15 @@ function initNavigation() {
         nav.classList.toggle("active"); // Ensure your CSS handles .nav.active for mobile
     });
 }
+// =============> nav scroll effect =================>
+// window.addEventListener('scroll', () => {
+//     const header = document.querySelector('.header');
+//     if (window.scrollY > 50) {
+//         header.classList.add('scrolled');
+//     } else {
+//         header.classList.remove('scrolled');
+//     }
+// });
 
 /* =====================================
    MODAL LOGIC

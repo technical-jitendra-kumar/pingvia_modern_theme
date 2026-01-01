@@ -61,11 +61,105 @@ body {
 /* ==========================================================================
    3. NAVIGATION & HERO
    ========================================================================== */
-.header { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border); }
-.navbar-wrapper { height: 80px; display: flex; justify-content: space-between; align-items: center; }
+/* .header { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border);
+border-bottom: 1px solid transparent;
+    border-image: linear-gradient(
+        to right, 
+        transparent, 
+        rgba(14, 165, 233, 0.4) 20%, 
+        var(--accent) 50%, 
+        rgba(14, 165, 233, 0.4) 80%, 
+        transparent
+    ) 1; }
+.navbar-wrapper { height: 75px; display: flex; justify-content: space-between; align-items: center; }
 .nav-list { display: flex; gap: 2rem; list-style: none; }
 .nav-link { text-decoration: none; color: var(--text-main); font-weight: 500; transition: var(--transition); }
-.nav-link:hover, .nav-link.active { color: var(--accent); }
+.nav-link:hover, .nav-link.active { color: var(--accent); } */
+/* ===============================
+   MODERN HEADER WITH GRADIENT BORDER
+================================ */
+.header { 
+    background: rgba(255, 255, 255, 0.7); 
+    backdrop-filter: blur(15px); 
+    position: sticky; 
+    top: 0; 
+    z-index: 1000; 
+    transition: var(--transition);
+
+    /* Purana border hata kar Gradient Border lagaya */
+    border-bottom: 1px solid transparent;
+    border-image: linear-gradient(
+        to right, 
+        transparent, 
+        rgba(14, 165, 233, 0.4) 20%, 
+        var(--accent) 50%, 
+        rgba(14, 165, 233, 0.4) 80%, 
+        transparent
+    ) 1;
+}
+
+.navbar-wrapper { 
+    height: 80px; /* Thoda height badhaya modern feel ke liye */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.nav {
+    /* Isse nav items center me focus rahenge */
+    margin-left: auto;
+    margin-right: 40px; 
+}
+
+.nav-list { 
+    display: flex; 
+    gap: 2.5rem; /* Gap thoda badhaya clean look ke liye */
+    list-style: none; 
+    align-items: center;
+}
+
+.nav-link { 
+    text-decoration: none; 
+    color: var(--text-main); 
+    font-weight: 600; 
+    font-size: 0.95rem;
+    transition: var(--transition);
+    position: relative;
+}
+
+/* Hover effect under navigation links */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: var(--transition);
+}
+
+.nav-link:hover::after, 
+.nav-link.active::after { 
+    width: 100%; 
+}
+
+.nav-link:hover, 
+.nav-link.active { 
+    color: var(--accent); 
+}
+
+/* Contact Button Special Styling inside Nav */
+.nav-list li:last-child a {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+}
+
+/* Scroll effect (Optional: Jab user scroll kare to navbar thoda chota ho jaye) */
+.header.scrolled {
+    height: 70px;
+    background: rgba(255, 255, 255, 0.95);
+}
 
 .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
 .hamburger span { width: 25px; height: 3px; background: var(--primary); border-radius: 2px; }
