@@ -48,6 +48,7 @@ function initNavigation() {
     });
 }
 
+
 // ======================> counter section stats logic ========================
 function initStatsCounter() {
     const stats = document.querySelectorAll('.stat-number');
