@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | Pingvia Solutions</title>
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="../assets/css/style.css"> <link rel="stylesheet" href="../assets/css/pages/about.css"> </head>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/pages/about.css">
+</head>
+
 <body class="about-page">
 
     <header class="header">
@@ -40,7 +44,8 @@
             <div class="container">
                 <span class="small-title">OUR STORY</span>
                 <h1>Empowering Businesses Through <br><span class="text-gradient">Smart Communication</span></h1>
-                <p>We bridge the gap between businesses and customers using cutting-edge automation and AI-driven solutions.</p>
+                <p>We bridge the gap between businesses and customers using cutting-edge automation and AI-driven
+                    solutions.</p>
             </div>
         </section>
 
@@ -48,7 +53,8 @@
             <div class="container grid-2">
                 <div class="content-box">
                     <h2 class="section-title">Our Mission</h2>
-                    <p>At Pingvia Solutions, our mission is to simplify complex business communication. We provide scalable tools like WhatsApp API and RCS to help SMEs grow faster with zero friction.</p>
+                    <p>At Pingvia Solutions, our mission is to simplify complex business communication. We provide
+                        scalable tools like WhatsApp API and RCS to help SMEs grow faster with zero friction.</p>
                     <ul class="check-list">
                         <li><i class="ri-checkbox-circle-fill"></i> Innovation First Approach</li>
                         <li><i class="ri-checkbox-circle-fill"></i> Customer-Centric Support</li>
@@ -56,7 +62,8 @@
                     </ul>
                 </div>
                 <div class="image-box">
-                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800" alt="Team working" class="rounded-img">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800"
+                        alt="Team working" class="rounded-img">
                 </div>
             </div>
         </section>
@@ -87,27 +94,34 @@
         </section>
     </main>
 
-        <footer class="footer">
+    <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h4>Pingvia Solutions</h4>
-                    <p>Smart business communication for the modern age.</p>
+                    <div class="footer-logo">
+                        <img src="/assets/images/logo.png" alt="Pingvia Logo" class="footer-img">
+                        <h4>Pingvia <span class="text-accent">Solutions</span></h4>
+                    </div>
+                    <p>Smart business communication for the modern age. Automate, engage, and scale your brand globally.
+                    </p>
                     <div class="footer-socials">
-                        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
-                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/919876543210?text=Hello%20I%20am%20interested%20in%20your%20services"
+                            target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="#" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
                     </div>
                 </div>
+
                 <div class="footer-col">
                     <h4>Services</h4>
                     <ul>
-                        <li><a href="/#services">WhatsApp API</a></li>
-                        <li><a href="/#services">Google RCS</a></li>
-                        <li><a href="/#services">IVR Solutions</a></li>
-                        <li><a href="/#services">Web Development</a></li>
+                        <li><a href="#services">WhatsApp API</a></li>
+                        <li><a href="#services">Google RCS</a></li>
+                        <li><a href="#services">IVR Solutions</a></li>
+                        <li><a href="#services">Web Development</a></li>
                     </ul>
                 </div>
+
                 <div class="footer-col">
                     <h4>Company</h4>
                     <ul>
@@ -117,29 +131,51 @@
                         <li><a href="/terms">Terms & Conditions</a></li>
                     </ul>
                 </div>
+
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul class="contact-info">
+                        <li><i class="fa-solid fa-envelope"></i> support@pingvia.com</li>
+                        <li><i class="fa-solid fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fa-solid fa-location-dot"></i> Lucknow, India</li>
+                    </ul>
+                </div>
             </div>
+
             <div class="footer-bottom">
-                <p>© 2025 Pingvia Solutions. All rights reserved.</p>
+                <p>© 2026 Pingvia Solutions. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <div id="chatbot">
-        <button id="chatbot-toggle">🤖</button>
+        <button id="chatbot-toggle">
+            <img src="/assets/images/Gemini_Generated_Image_8yrdrm8yrdrm8yrd.png" alt="Pingvia Bot">
+        </button>
+
         <div id="chatbot-window">
             <div class="chatbot-header">
-                <span>AI Assistant</span>
-                <button id="chatbot-close">&times;</button>
+                <div class="header-info">
+                    <div class="online-indicator"></div>
+                    <span>Pingvia AI Assistant</span>
+                </div>
+                <button id="chatbot-close"><i class="ri-close-line"></i></button>
             </div>
+
             <div class="chatbot-messages" id="chatbot-messages">
-                <div class="bot-message">Hi! How can I help you today?</div>
+                <div class="bot-message">Hi there! 👋 How can I help you scale your business today?</div>
             </div>
+
             <form id="chatbot-form">
-                <input type="text" id="chatbot-input" placeholder="Ask anything..." />
+                <input type="text" id="chatbot-input" placeholder="Type your message..." autocomplete="off" />
+                <button type="submit" id="chatbot-send">
+                    <i class="ri-send-plane-fill"></i>
+                </button>
             </form>
         </div>
     </div>
 
     <script src="../assets/js/main.js"></script>
 </body>
+
 </html>
