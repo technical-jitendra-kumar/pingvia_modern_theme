@@ -47,6 +47,39 @@ function initNavigation() {
         nav.classList.toggle("active"); // Ensure your CSS handles .nav.active for mobile
     });
 }
+
+// ======================> counter section stats logic ========================
+function initStatsCounter() {
+    const stats = document.querySelectorAll('.stat-number');
+    const speed = 200; // Counter ki speed
+
+    const startCounter = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = +entry.target.getAttribute('data-target');
+                const count = +entry.target.innerText;
+                const increment = target / speed;
+
+                const updateCount = () => {
+                    const currentCount = +entry.target.innerText;
+                    if (currentCount < target) {
+                        entry.target.innerText = Math.ceil(currentCount + increment);
+                        setTimeout(updateCount, 1);
+                    } else {
+                        entry.target.innerText = target;
+                    }
+                };
+                updateCount();
+                observer.unobserve(entry.target); // Ek hi baar animate hoga
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(startCounter, { threshold: 0.5 });
+    stats.forEach(stat => observer.observe(stat));
+}
+
+document.addEventListener('DOMContentLoaded', initStatsCounter);
 // =============> nav scroll effect =================>
 // window.addEventListener('scroll', () => {
 //     const header = document.querySelector('.header');
@@ -82,46 +115,54 @@ function initModal() {
     window.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
 }
 
-/* =====================================
-   MODERN TESTIMONIAL SLIDER (Fixed Gap/Overlap)
-===================================== */
+// ============== testimonial card slider logic ======================
+
 function initTestimonialSlider() {
-    const track = qs('.testimonials-track');
-    const dots = qsa('.dot');
-    
+    const track = document.querySelector('.testimonials-track');
+    const dots = document.querySelectorAll('.t-dot');
+    let currentSlide = 0;
+    let slideInterval;
+
     if (!track || dots.length === 0) return;
 
-    let currentIndex = 0;
-    const totalSlides = dots.length;
-
-    const updateSlider = (index) => {
-        // We use percentage based on 100% width of the container
-        track.style.transform = `translateX(-${index * 100}%)`;
-        
-        dots.forEach(dot => dot.classList.remove('active'));
+    // Slide function
+    function goToSlide(index) {
+        dots.forEach(d => d.classList.remove('active'));
         dots[index].classList.add('active');
-        currentIndex = index;
-    };
+        
+        // Desktop par 2 cards hain isliye 100% move karne par agle 2 cards aayenge
+        const movePercent = index * 100;
+        track.style.transform = `translateX(-${movePercent}%)`;
+        currentSlide = index;
+    }
 
-    dots.forEach((dot, i) => {
-        dot.addEventListener('click', () => updateSlider(i));
+    // Auto-slide start function
+    function startAutoSlide() {
+        slideInterval = setInterval(() => {
+            let nextSlide = (currentSlide + 1) % dots.length;
+            goToSlide(nextSlide);
+        }, 3000); // 3 seconds timer
+    }
+
+    // Manual Click logic
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            goToSlide(index);
+            // Click karne par purana timer clear karke naya start karenge
+            clearInterval(slideInterval);
+            startAutoSlide();
+        });
     });
 
-    // Smoother Auto-slide
-    let sliderInterval = setInterval(() => {
-        let nextIndex = (currentIndex + 1) % totalSlides;
-        updateSlider(nextIndex);
-    }, 5000);
+    // Pehli baar start karne ke liye
+    startAutoSlide();
 
-    // Pause on hover
-    track.addEventListener('mouseenter', () => clearInterval(sliderInterval));
-    track.addEventListener('mouseleave', () => {
-        sliderInterval = setInterval(() => {
-            let nextIndex = (currentIndex + 1) % totalSlides;
-            updateSlider(nextIndex);
-        }, 5000);
-    });
+    // Mouse hover par pause karna (Optional but professional)
+    track.addEventListener('mouseenter', () => clearInterval(slideInterval));
+    track.addEventListener('mouseleave', () => startAutoSlide());
 }
+
+document.addEventListener('DOMContentLoaded', initTestimonialSlider);
 
 // ======================= frequently asked questions accordion logic =======================
 // FAQ Accordion Logic
@@ -354,3 +395,27 @@ document.addEventListener('DOMContentLoaded', () => {
     initCtaBgSlider();
     console.log("Sliders initialized successfully!"); // Debugging ke liye
 });
+
+
+// ============> mockup panel images change ==================
+
+function initPanelSlider() {
+    const slides = document.querySelectorAll('.p-slide');
+    const dots = document.querySelectorAll('.dot');
+    let current = 0;
+
+    if (slides.length === 0) return;
+
+    setInterval(() => {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+
+        current = (current + 1) % slides.length;
+
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+    }, 4000); // Har 4 second mein screenshot badlega
+}
+
+// Call in DOMContentLoaded
+document.addEventListener('DOMContentLoaded', initPanelSlider);
