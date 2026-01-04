@@ -11,15 +11,13 @@ export default async function handler(req, res) {
     }
 
     const API_KEY = process.env.GEMINI_API_KEY;
-     console.log("API KEY EXISTS:", !!API_KEY);
+    console.log("API KEY EXISTS:", !!API_KEY);
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent?key=${API_KEY}`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           contents: [
             {
@@ -30,6 +28,7 @@ export default async function handler(req, res) {
         }),
       }
     );
+
 
     if (!response.ok) {
       const errorText = await response.text();
