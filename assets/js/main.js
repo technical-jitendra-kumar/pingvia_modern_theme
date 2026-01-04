@@ -294,7 +294,7 @@ if (chatbotForm) {
             if (data && data.reply) {
                 appendMessage('bot', data.reply);
             } else {
-                appendMessage('bot', "Kshama karein, main abhi samajh nahi pa raha hoon.");
+                appendMessage('bot', "Sorry, main abhi samajh nahi pa raha hoon.");
             }
 
         } catch (error) {
