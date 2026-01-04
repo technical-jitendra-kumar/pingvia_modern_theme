@@ -187,46 +187,130 @@ faqItems.forEach(item => {
 /* =====================================
    CHATBOT LOGIC
 ===================================== */
-function initChatbot() {
-    const toggle = qs("#chatbot-toggle");
-    const windowEl = qs("#chatbot-window");
-    const close = qs("#chatbot-close");
-    const form = qs("#chatbot-form");
-    const input = qs("#chatbot-input");
-    const messages = qs("#chatbot-messages");
+// function initChatbot() {
+//     const toggle = qs("#chatbot-toggle");
+//     const windowEl = qs("#chatbot-window");
+//     const close = qs("#chatbot-close");
+//     const form = qs("#chatbot-form");
+//     const input = qs("#chatbot-input");
+//     const messages = qs("#chatbot-messages");
 
-    if (!toggle || !windowEl) return;
+//     if (!toggle || !windowEl) return;
 
-    toggle.addEventListener("click", () => {
-        const isVisible = windowEl.style.display === "flex";
-        windowEl.style.display = isVisible ? "none" : "flex";
+//     toggle.addEventListener("click", () => {
+//         const isVisible = windowEl.style.display === "flex";
+//         windowEl.style.display = isVisible ? "none" : "flex";
+//     });
+
+//     close?.addEventListener("click", () => {
+//         windowEl.style.display = "none";
+//     });
+
+//     form?.addEventListener("submit", (e) => {
+//         e.preventDefault();
+//         const text = input.value.trim();
+//         if (!text) return;
+
+//         // User Message
+//         const uMsg = document.createElement("div");
+//         uMsg.className = "user-message";
+//         uMsg.textContent = text;
+//         messages.appendChild(uMsg);
+//         input.value = "";
+
+//         // Bot typing effect simulation
+//         setTimeout(() => {
+//             const bMsg = document.createElement("div");
+//             bMsg.className = "bot-message";
+//             bMsg.textContent = "Thank you! An expert will get back to you shortly.";
+//             messages.appendChild(bMsg);
+//             messages.scrollTop = messages.scrollHeight;
+//         }, 600);
+//     });
+// }
+
+// main.js - Chatbot Frontend Logic
+
+// Isse chatbot ka window open aur close hoga
+const chatbotToggle = document.getElementById('chatbot-toggle');
+const chatbotWindow = document.getElementById('chatbot-window');
+const chatbotClose = document.getElementById('chatbot-close');
+
+if (chatbotToggle && chatbotWindow) {
+    chatbotToggle.addEventListener('click', () => {
+        chatbotWindow.style.display = chatbotWindow.style.display === 'flex' ? 'none' : 'flex';
     });
+}
 
-    close?.addEventListener("click", () => {
-        windowEl.style.display = "none";
+if (chatbotClose) {
+    chatbotClose.addEventListener('click', () => {
+        chatbotWindow.style.display = 'none';
     });
+}
 
-    form?.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const text = input.value.trim();
-        if (!text) return;
+// =======> api call =========>
 
-        // User Message
-        const uMsg = document.createElement("div");
-        uMsg.className = "user-message";
-        uMsg.textContent = text;
-        messages.appendChild(uMsg);
-        input.value = "";
+const chatbotForm = document.getElementById('chatbot-form');
+const chatbotInput = document.getElementById('chatbot-input');
+const chatbotMessages = document.querySelector('.chatbot-messages');
 
-        // Bot typing effect simulation
-        setTimeout(() => {
-            const bMsg = document.createElement("div");
-            bMsg.className = "bot-message";
-            bMsg.textContent = "Thank you! An expert will get back to you shortly.";
-            messages.appendChild(bMsg);
-            messages.scrollTop = messages.scrollHeight;
-        }, 600);
-    });
+chatbotForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const userMessage = chatbotInput.value.trim();
+    if (!userMessage) return;
+
+    // 1. User ka message screen par dikhao
+    appendMessage('user', userMessage);
+    chatbotInput.value = '';
+
+    // 2. Typing indicator dikhao (Professional look ke liye)
+    const typingMsg = appendMessage('bot', 'Typing...');
+
+    try {
+        // 3. Vercel API ko call karo (Jo humne Step 2 me banaya)
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: userMessage })
+        });
+
+        const data = await response.json();
+        
+        // 4. Typing indicator hatao aur Bot ka asli reply dikhao
+        typingMsg.remove();
+        appendMessage('bot', data.reply);
+
+        // 5. Data Filtering: Agar user ne Name/Number diya, toh aapko lead mil jaye
+        checkAndSendLead(userMessage);
+
+    } catch (error) {
+        typingMsg.innerText = "Sorry, connection slow hai. Dobara koshish karein.";
+        console.error("Error:", error);
+    }
+});
+
+// Helper Function: Messages ko UI me add karne ke liye
+function appendMessage(sender, text) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = sender === 'user' ? 'user-message' : 'bot-message';
+    msgDiv.innerText = text;
+    chatbotMessages.appendChild(msgDiv);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight; // Auto-scroll to bottom
+    return msgDiv;
+}
+// ====> lead detection and notification logic =====
+function checkAndSendLead(text) {
+    // Regex to detect 10-digit phone number or Email
+    const phonePattern = /[6-9][0-9]{9}/;
+    const emailPattern = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+
+    if (phonePattern.test(text) || emailPattern.test(text)) {
+        console.log("Lead Detected! Sending to owner...");
+        
+        // Yahan hum EmailJS ya Webhook use karenge 
+        // Taaki aapko turant Email/WhatsApp mil jaye client ki query ke sath
+        notifyOwner(text); 
+    }
 }
 
 // =============request demo modal logic form submite success msg==================
