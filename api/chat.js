@@ -1,38 +1,47 @@
 export default async function handler(req, res) {
+    // Sirf POST allow karein
     if (req.method !== 'POST') {
-        return res.status(405).json({ message: 'Only POST requests allowed' });
+        return res.status(405).json({ error: 'Method not allowed' });
     }
 
     try {
         const { message } = req.body;
-        const API_KEY = process.env.GEMINI_API_KEY;
+        const key = process.env.GEMINI_API_KEY;
 
-        // Gemini 1.5 Flash use karein (Fast aur Reliable hai)
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+        if (!key) {
+            throw new Error("API Key missing on Vercel side");
+        }
+
+        // Gemini 1.5 Flash Model (Latest & Stable)
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
+
+        const response = await fetch(apiUrl, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 contents: [{
-                    parts: [{ text: `You are a professional assistant for Pingvia Technologies. Services: WhatsApp API, RCS, IVR, Marketing. Summarize client needs. User says: ${message}` }]
+                    parts: [{ text: `You are a professional assistant for Pingvia Technologies. Keep answers short and professional. User query: ${message}` }]
                 }]
             })
         });
 
         const data = await response.json();
 
-        // Check if Gemini returned an error
+        // Agar Gemini error de (Jaise invalid key ya quota)
         if (data.error) {
-            console.error("Gemini API Error:", data.error);
-            return res.status(500).json({ reply: "API Key issue or quota exceeded." });
+            return res.status(500).json({ error: data.error.message });
         }
 
-        const botReply = data.candidates[0].content.parts[0].text;
-        return res.status(200).json({ reply: botReply });
+        // Response check karke bhej rahe hain
+        if (data.candidates && data.candidates[0].content.parts[0].text) {
+            const reply = data.candidates[0].content.parts[0].text;
+            return res.status(200).json({ reply: reply });
+        } else {
+            throw new Error("Invalid response structure from Gemini");
+        }
 
     } catch (error) {
-        console.error("Server Error:", error);
-        return res.status(500).json({ reply: "Internal Server Error in API route." });
+        console.error("Vercel Function Error:", error.message);
+        return res.status(500).json({ reply: "Server error, please try again later." });
     }
 }
