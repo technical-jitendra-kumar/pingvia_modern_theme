@@ -298,6 +298,7 @@ if (chatbotForm) {
         }
     });
 }
+window.initChatbot = function() { console.log("Chatbot ready!"); };
 
 // 3. Helper Functions
 function appendMessage(sender, text) {
