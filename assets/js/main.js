@@ -266,28 +266,51 @@ chatbotForm.addEventListener('submit', async (e) => {
     // 2. Typing indicator dikhao (Professional look ke liye)
     const typingMsg = appendMessage('bot', 'Typing...');
 
-    try {
-        // 3. Vercel API ko call karo (Jo humne Step 2 me banaya)
-        const response = await fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: userMessage })
-        });
+//     try {
+//         // 3. Vercel API ko call karo (Jo humne Step 2 me banaya)
+//         const response = await fetch('/api/chat', {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify({ message: userMessage })
+//         });
 
-        const data = await response.json();
+//         const data = await response.json();
         
-        // 4. Typing indicator hatao aur Bot ka asli reply dikhao
+//         // 4. Typing indicator hatao aur Bot ka asli reply dikhao
+//         typingMsg.remove();
+//         appendMessage('bot', data.reply);
+
+//         // 5. Data Filtering: Agar user ne Name/Number diya, toh aapko lead mil jaye
+//         checkAndSendLead(userMessage);
+
+//     } catch (error) {
+//         typingMsg.innerText = "Sorry, connection slow hai. Dobara koshish karein.";
+//         console.error("Error:", error);
+//     }
+// });
+// main.js ka fetch part update karein
+try {
+    const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMessage })
+    });
+
+    const data = await response.json();
+    
+    // Yahan check lagaiye undefined se bachne ke liye
+    if (data && data.reply) {
         typingMsg.remove();
         appendMessage('bot', data.reply);
-
-        // 5. Data Filtering: Agar user ne Name/Number diya, toh aapko lead mil jaye
-        checkAndSendLead(userMessage);
-
-    } catch (error) {
-        typingMsg.innerText = "Sorry, connection slow hai. Dobara koshish karein.";
-        console.error("Error:", error);
+    } else {
+        throw new Error("Response me 'reply' nahi mila");
     }
-});
+
+} catch (error) {
+    typingMsg.remove();
+    appendMessage('bot', "Abhi main offline hoon. Live hone par Gemini se baat hogi!");
+    console.error("Asli Error ye hai:", error);
+}
 
 // Helper Function: Messages ko UI me add karne ke liye
 function appendMessage(sender, text) {
