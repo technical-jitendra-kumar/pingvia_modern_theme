@@ -26,7 +26,7 @@ function initNavigation() {
     // Sticky Header
     window.addEventListener("scroll", () => {
         header.classList.toggle("header-scrolled", window.scrollY > 50);
-        
+
         // Active Link Highlight
         let current = "";
         sections.forEach((section) => {
@@ -130,7 +130,7 @@ function initTestimonialSlider() {
     function goToSlide(index) {
         dots.forEach(d => d.classList.remove('active'));
         dots[index].classList.add('active');
-        
+
         // Desktop par 2 cards hain isliye 100% move karne par agle 2 cards aayenge
         const movePercent = index * 100;
         track.style.transform = `translateX(-${movePercent}%)`;
@@ -171,13 +171,13 @@ const faqItems = document.querySelectorAll('.faq-item');
 
 faqItems.forEach(item => {
     const question = item.querySelector('.faq-question');
-    
+
     question.addEventListener('click', () => {
         const isActive = item.classList.contains('active');
-        
+
         // Pehle se khule hue kisi bhi FAQ ko band karein
         faqItems.forEach(otherItem => otherItem.classList.remove('active'));
-        
+
         // Agar current item pehle se active nahi tha, toh usey open karein
         if (!isActive) {
             item.classList.add('active');
@@ -234,7 +234,7 @@ faqItems.forEach(item => {
    CHATBOT FULL LOGIC (TOGGLE + GEMINI FETCH)
    ========================================================================== */
 // main.js - Full Updated Code
-window.initChatbot = function() { console.log("Pingvia Chatbot Initialized!"); };
+window.initChatbot = function () { console.log("Pingvia Chatbot Initialized!"); };
 window.initChatbot();
 
 const chatbotToggle = document.getElementById('chatbot-toggle');
@@ -295,8 +295,8 @@ function appendMessage(sender, text) {
     const msgDiv = document.createElement('div');
     msgDiv.className = sender === 'user' ? 'user-message' : 'bot-message';
     msgDiv.style.cssText = `margin-bottom:10px; padding:10px; border-radius:10px; max-width:80%; font-size:14px;`;
-    
-    if(sender === 'user') {
+
+    if (sender === 'user') {
         msgDiv.style.backgroundColor = "#0ea5e9";
         msgDiv.style.color = "white";
         msgDiv.style.alignSelf = "flex-end";
@@ -310,44 +310,6 @@ function appendMessage(sender, text) {
     chatbotMessages.appendChild(msgDiv);
     chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     return msgDiv;
-}
-
-// 3. Helper Functions
-function appendMessage(sender, text) {
-    const msgDiv = document.createElement('div');
-    msgDiv.className = sender === 'user' ? 'user-message' : 'bot-message';
-    msgDiv.style.cssText = `
-        margin-bottom: 10px;
-        padding: 10px;
-        border-radius: 10px;
-        max-width: 80%;
-        font-size: 14px;
-        line-height: 1.4;
-    `;
-    
-    if(sender === 'user') {
-        msgDiv.style.backgroundColor = "#0ea5e9";
-        msgDiv.style.color = "white";
-        msgDiv.style.alignSelf = "flex-end";
-        msgDiv.style.marginLeft = "auto";
-    } else {
-        msgDiv.style.backgroundColor = "#f1f5f9";
-        msgDiv.style.color = "#1e293b";
-    }
-
-    msgDiv.innerText = text;
-    chatbotMessages.appendChild(msgDiv);
-    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-    return msgDiv;
-}
-
-// Naya lead detection function
-function checkIfLead(text) {
-    const phoneRegex = /[6-9][0-9]{9}/;
-    if (phoneRegex.test(text)) {
-        console.log("Potential Lead Detected:", text);
-        // Yahan EmailJS trigger karenge baad mein
-    }
 }
 // =============request demo modal logic form submite success msg==================
 
@@ -372,7 +334,7 @@ openModalBtns.forEach(btn => {
 // 3. Form Submit Logic (Main Logic)
 demoForm?.addEventListener('submit', (e) => {
     e.preventDefault();
-    
+
     // Yahan hum form hide karke success message dikhayenge
     formContainer.style.display = 'none';
     successState.style.display = 'block';
@@ -382,7 +344,7 @@ demoForm?.addEventListener('submit', (e) => {
 const hideModal = () => {
     demoModal.style.display = 'none';
     document.body.style.overflow = 'auto'; // Resume scroll
-    
+
     // Reset modal state for next time
     setTimeout(() => {
         formContainer.style.display = 'block';
@@ -401,13 +363,13 @@ window.addEventListener('click', (e) => {
 
 // ========> demo model data send to google sheets logic <======
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyB1soHEIQ-7k8vkZ7MRwKgOW3pmUpcHYIBDm2kSTlfEEAPGOmo0aqYWsDlQmyHMtoYGw/exec'; 
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyB1soHEIQ-7k8vkZ7MRwKgOW3pmUpcHYIBDm2kSTlfEEAPGOmo0aqYWsDlQmyHMtoYGw/exec';
 
 // const demoForm = document.getElementById('demo-form');
 
 demoForm?.addEventListener('submit', (e) => {
     e.preventDefault();
-    
+
     const submitBtn = e.target.querySelector('button[type="submit"]');
     submitBtn.disabled = true;
     submitBtn.innerText = "Sending...";
@@ -419,23 +381,23 @@ demoForm?.addEventListener('submit', (e) => {
 
     // GET request bhej rahe hain kyunki ye zyada reliable hai Sheets ke liye
     fetch(finalUrl)
-    .then(res => res.json())
-    .then(data => {
-        if(data.result === "success") {
-            document.getElementById('form-container').style.display = 'none';
-            document.getElementById('success-state').style.display = 'block';
-        } else {
-            alert("Error: " + data.error);
-        }
-    })
-    .catch(err => {
-        console.error(err);
-        alert("Network Error! Check your internet or Script URL.");
-    })
-    .finally(() => {
-        submitBtn.disabled = false;
-        submitBtn.innerText = "Request Demo";
-    });
+        .then(res => res.json())
+        .then(data => {
+            if (data.result === "success") {
+                document.getElementById('form-container').style.display = 'none';
+                document.getElementById('success-state').style.display = 'block';
+            } else {
+                alert("Error: " + data.error);
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Network Error! Check your internet or Script URL.");
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Request Demo";
+        });
 });
 
 
@@ -459,29 +421,29 @@ contactForm?.addEventListener('submit', (e) => {
 // ======================== contact us form data send to google sheets logic ========================
 const CONTACT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyB1soHEIQ-7k8vkZ7MRwKgOW3pmUpcHYIBDm2kSTlfEEAPGOmo0aqYWsDlQmyHMtoYGw/exec';
 
-document.getElementById('contact-form-main')?.addEventListener('submit', function(e) {
+document.getElementById('contact-form-main')?.addEventListener('submit', function (e) {
     e.preventDefault();
     const form = e.target;
     const btn = form.querySelector('button');
-    
+
     btn.disabled = true;
     btn.innerText = "Sending...";
 
     const params = new URLSearchParams(new FormData(form)).toString();
-    
+
     fetch(CONTACT_SCRIPT_URL + "?" + params)
-    .then(res => res.json())
-    .then(data => {
-        if(data.result === "success") {
-            form.style.display = 'none';
-            document.getElementById('contact-success').style.display = 'block';
-        }
-    })
-    .catch(err => alert("Error sending message!"))
-    .finally(() => {
-        btn.disabled = false;
-        btn.innerText = "Send Message";
-    });
+        .then(res => res.json())
+        .then(data => {
+            if (data.result === "success") {
+                form.style.display = 'none';
+                document.getElementById('contact-success').style.display = 'block';
+            }
+        })
+        .catch(err => alert("Error sending message!"))
+        .finally(() => {
+            btn.disabled = false;
+            btn.innerText = "Send Message";
+        });
 });
 
 
