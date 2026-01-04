@@ -230,112 +230,97 @@ faqItems.forEach(item => {
 // }
 
 // main.js - Chatbot Frontend Logic
+/* ==========================================================================
+   CHATBOT FULL LOGIC (TOGGLE + GEMINI FETCH)
+   ========================================================================== */
 
-// Isse chatbot ka window open aur close hoga
 const chatbotToggle = document.getElementById('chatbot-toggle');
 const chatbotWindow = document.getElementById('chatbot-window');
-const chatbotClose = document.getElementById('chatbot-close');
-
-if (chatbotToggle && chatbotWindow) {
-    chatbotToggle.addEventListener('click', () => {
-        chatbotWindow.style.display = chatbotWindow.style.display === 'flex' ? 'none' : 'flex';
-    });
-}
-
-if (chatbotClose) {
-    chatbotClose.addEventListener('click', () => {
-        chatbotWindow.style.display = 'none';
-    });
-}
-
-// =======> api call =========>
-
 const chatbotForm = document.getElementById('chatbot-form');
 const chatbotInput = document.getElementById('chatbot-input');
 const chatbotMessages = document.querySelector('.chatbot-messages');
 
-chatbotForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const userMessage = chatbotInput.value.trim();
-    if (!userMessage) return;
-
-    // 1. User ka message screen par dikhao
-    appendMessage('user', userMessage);
-    chatbotInput.value = '';
-
-    // 2. Typing indicator dikhao (Professional look ke liye)
-    const typingMsg = appendMessage('bot', 'Typing...');
-
-//     try {
-//         // 3. Vercel API ko call karo (Jo humne Step 2 me banaya)
-//         const response = await fetch('/api/chat', {
-//             method: 'POST',
-//             headers: { 'Content-Type': 'application/json' },
-//             body: JSON.stringify({ message: userMessage })
-//         });
-
-//         const data = await response.json();
-        
-//         // 4. Typing indicator hatao aur Bot ka asli reply dikhao
-//         typingMsg.remove();
-//         appendMessage('bot', data.reply);
-
-//         // 5. Data Filtering: Agar user ne Name/Number diya, toh aapko lead mil jaye
-//         checkAndSendLead(userMessage);
-
-//     } catch (error) {
-//         typingMsg.innerText = "Sorry, connection slow hai. Dobara koshish karein.";
-//         console.error("Error:", error);
-//     }
-// });
-// main.js ka fetch part update karein
-try {
-    const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage })
+// 1. Open/Close Logic
+if (chatbotToggle && chatbotWindow) {
+    chatbotToggle.addEventListener('click', () => {
+        if (chatbotWindow.style.display === 'flex') {
+            chatbotWindow.style.display = 'none';
+        } else {
+            chatbotWindow.style.display = 'flex';
+        }
     });
-
-    const data = await response.json();
-    
-    // Yahan check lagaiye undefined se bachne ke liye
-    if (data && data.reply) {
-        typingMsg.remove();
-        appendMessage('bot', data.reply);
-    } else {
-        throw new Error("Response me 'reply' nahi mila");
-    }
-
-} catch (error) {
-    typingMsg.remove();
-    appendMessage('bot', "Abhi main offline hoon. Live hone par Gemini se baat hogi!");
-    console.error("Asli Error ye hai:", error);
 }
 
-// Helper Function: Messages ko UI me add karne ke liye
+// 2. Message Sending & Gemini API Call
+if (chatbotForm) {
+    chatbotForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const userMessage = chatbotInput.value.trim();
+        
+        if (!userMessage) return;
+
+        // User message display karo
+        appendMessage('user', userMessage);
+        chatbotInput.value = '';
+
+        // Typing indicator dikhao
+        const typingMsg = appendMessage('bot', 'Thinking...');
+
+        try {
+            // Vercel API Call
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userMessage })
+            });
+
+            // Agar local check kar rahe ho to ye error dega hi
+            if (!response.ok) {
+                throw new Error("Local environment me API nahi mili");
+            }
+
+            const data = await response.json();
+            typingMsg.remove();
+
+            if (data && data.reply) {
+                appendMessage('bot', data.reply);
+            } else {
+                appendMessage('bot', "Kshama karein, main abhi samajh nahi pa raha hoon.");
+            }
+
+        } catch (error) {
+            console.error("Chatbot Error:", error);
+            typingMsg.remove();
+            // Local machine par ye message dikhega
+            appendMessage('bot', "Main abhi offline hoon (Local Testing). Vercel par live hote hi Gemini shuru ho jayega!");
+        }
+    });
+}
+
+// 3. Helper Function to add messages
 function appendMessage(sender, text) {
     const msgDiv = document.createElement('div');
     msgDiv.className = sender === 'user' ? 'user-message' : 'bot-message';
+    msgDiv.style.marginBottom = "10px";
+    msgDiv.style.padding = "10px";
+    msgDiv.style.borderRadius = "10px";
+    msgDiv.style.maxWidth = "80%";
+    
+    if(sender === 'user') {
+        msgDiv.style.backgroundColor = "#0ea5e9";
+        msgDiv.style.color = "white";
+        msgDiv.style.alignSelf = "flex-end";
+        msgDiv.style.marginLeft = "auto";
+    } else {
+        msgDiv.style.backgroundColor = "#f1f5f9";
+        msgDiv.style.color = "#1e293b";
+    }
+
     msgDiv.innerText = text;
     chatbotMessages.appendChild(msgDiv);
-    chatbotMessages.scrollTop = chatbotMessages.scrollHeight; // Auto-scroll to bottom
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     return msgDiv;
 }
-// ====> lead detection and notification logic =====
-function checkAndSendLead(text) {
-    // Regex to detect 10-digit phone number or Email
-    const phonePattern = /[6-9][0-9]{9}/;
-    const emailPattern = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
-
-    if (phonePattern.test(text) || emailPattern.test(text)) {
-        console.log("Lead Detected! Sending to owner...");
-        
-        // Yahan hum EmailJS ya Webhook use karenge 
-        // Taaki aapko turant Email/WhatsApp mil jaye client ki query ke sath
-        notifyOwner(text); 
-    }
-}
-
 // =============request demo modal logic form submite success msg==================
 
 // 1. Elements Selection
