@@ -1,65 +1,35 @@
-export const config = {
-  runtime: "edge",
-};
-
-export default async function handler(req) {
-  if (req.method !== 'POST') {
-    return new Response(
-      JSON.stringify({ error: "Method not allowed" }),
-      { status: 405 }
-    );
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ reply: "Method not allowed" });
   }
 
   try {
-    const { message } = await req.json();
-    const key = process.env.GEMINI_API_KEY;
+    const { message } = req.body;
 
-    if (!key) {
-      return new Response(
-        JSON.stringify({ reply: "Backend Error: API Key missing." }),
-        { status: 500 }
-      );
-    }
-
-    const apiUrl =
-      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${key}`;
-
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [
-              {
-                text: `You are a professional assistant for Pingvia Technologies.
-Services: WhatsApp API, RCS, IVR, Digital Marketing.
-Answer professionally: ${message}`
-              }
-            ]
-          }
-        ]
-      })
-    });
+    const response = await fetch(
+      "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=" +
+        process.env.GEMINI_API_KEY,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [{ text: message }],
+            },
+          ],
+        }),
+      }
+    );
 
     const data = await response.json();
 
-    if (data?.candidates?.[0]?.content?.parts?.[0]?.text) {
-      return new Response(
-        JSON.stringify({ reply: data.candidates[0].content.parts[0].text }),
-        { status: 200 }
-      );
-    }
-
-    return new Response(
-      JSON.stringify({ reply: "AI response empty." }),
-      { status: 500 }
-    );
-
-  } catch (error) {
-    return new Response(
-      JSON.stringify({ reply: "Server error: " + error.message }),
-      { status: 500 }
-    );
+    return res.status(200).json({
+      reply:
+        data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+        "No AI response",
+    });
+  } catch (err) {
+    return res.status(500).json({ reply: err.message });
   }
 }
