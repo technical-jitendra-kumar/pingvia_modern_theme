@@ -233,6 +233,10 @@ faqItems.forEach(item => {
 /* ==========================================================================
    CHATBOT FULL LOGIC (TOGGLE + GEMINI FETCH)
    ========================================================================== */
+// main.js - Full Updated Code
+window.initChatbot = function() { console.log("Pingvia Chatbot Initialized!"); };
+window.initChatbot();
+
 const chatbotToggle = document.getElementById('chatbot-toggle');
 const chatbotWindow = document.getElementById('chatbot-window');
 const chatbotForm = document.getElementById('chatbot-form');
@@ -246,59 +250,67 @@ if (chatbotToggle && chatbotWindow) {
         chatbotWindow.style.display = (chatbotWindow.style.display === 'flex') ? 'none' : 'flex';
     });
 }
-
 if (chatbotClose && chatbotWindow) {
     chatbotClose.addEventListener('click', () => {
         chatbotWindow.style.display = 'none';
     });
 }
 
-// 2. Message Sending & Gemini API Call
+// 2. Message Sending
 if (chatbotForm) {
     chatbotForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const userMessage = chatbotInput.value.trim();
-        
         if (!userMessage) return;
 
         appendMessage('user', userMessage);
         chatbotInput.value = '';
-
         const typingMsg = appendMessage('bot', 'Thinking...');
 
         try {
-            // Updated Fetch: window.location.origin use karne se path issue nahi hota
-            const response = await fetch(`${window.location.origin}/api/chat`, {
+            const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: userMessage })
             });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.reply || "Server Error");
-            }
 
             const data = await response.json();
             typingMsg.remove();
 
             if (data && data.reply) {
                 appendMessage('bot', data.reply);
-                // Lead detection logic (Step 4 ke liye ready rakhein)
-                checkIfLead(userMessage);
             } else {
-                appendMessage('bot', "Kshama karein, main abhi samajh nahi pa raha hoon.");
+                appendMessage('bot', "Technical issue, please try again.");
             }
-
         } catch (error) {
-            console.error("Chatbot Error:", error);
             typingMsg.remove();
-            // Local machine ya backend error par ye dikhega
-            appendMessage('bot', "Connection issue. Agar aap local check kar rahe hain toh Vercel par deploy karein.");
+            appendMessage('bot', "Connection error. Please check if deployed on Vercel.");
+            console.error("Chatbot Error:", error);
         }
     });
 }
-window.initChatbot = function() { console.log("Chatbot ready!"); };
+
+// 3. Helper to add messages
+function appendMessage(sender, text) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = sender === 'user' ? 'user-message' : 'bot-message';
+    msgDiv.style.cssText = `margin-bottom:10px; padding:10px; border-radius:10px; max-width:80%; font-size:14px;`;
+    
+    if(sender === 'user') {
+        msgDiv.style.backgroundColor = "#0ea5e9";
+        msgDiv.style.color = "white";
+        msgDiv.style.alignSelf = "flex-end";
+        msgDiv.style.marginLeft = "auto";
+    } else {
+        msgDiv.style.backgroundColor = "#f1f5f9";
+        msgDiv.style.color = "#1e293b";
+    }
+
+    msgDiv.innerText = text;
+    chatbotMessages.appendChild(msgDiv);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    return msgDiv;
+}
 
 // 3. Helper Functions
 function appendMessage(sender, text) {
