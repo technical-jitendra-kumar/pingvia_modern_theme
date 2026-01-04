@@ -233,32 +233,25 @@ faqItems.forEach(item => {
 /* ==========================================================================
    CHATBOT FULL LOGIC (TOGGLE + GEMINI FETCH)
    ========================================================================== */
-
 const chatbotToggle = document.getElementById('chatbot-toggle');
 const chatbotWindow = document.getElementById('chatbot-window');
 const chatbotForm = document.getElementById('chatbot-form');
 const chatbotInput = document.getElementById('chatbot-input');
 const chatbotMessages = document.querySelector('.chatbot-messages');
+const chatbotClose = document.getElementById('chatbot-close');
 
 // 1. Open/Close Logic
 if (chatbotToggle && chatbotWindow) {
     chatbotToggle.addEventListener('click', () => {
-        if (chatbotWindow.style.display === 'flex') {
-            chatbotWindow.style.display = 'none';
-        } else {
-            chatbotWindow.style.display = 'flex';
-        }
+        chatbotWindow.style.display = (chatbotWindow.style.display === 'flex') ? 'none' : 'flex';
     });
 }
-const chatbotClose = document.getElementById('chatbot-close');
 
-// Close button logic
 if (chatbotClose && chatbotWindow) {
     chatbotClose.addEventListener('click', () => {
         chatbotWindow.style.display = 'none';
     });
 }
-
 
 // 2. Message Sending & Gemini API Call
 if (chatbotForm) {
@@ -268,24 +261,22 @@ if (chatbotForm) {
         
         if (!userMessage) return;
 
-        // User message display karo
         appendMessage('user', userMessage);
         chatbotInput.value = '';
 
-        // Typing indicator dikhao
         const typingMsg = appendMessage('bot', 'Thinking...');
 
         try {
-            // Vercel API Call
-            const response = await fetch('/api/chat', {
+            // Updated Fetch: window.location.origin use karne se path issue nahi hota
+            const response = await fetch(`${window.location.origin}/api/chat`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: userMessage })
             });
 
-            // Agar local check kar rahe ho to ye error dega hi
             if (!response.ok) {
-                throw new Error("Local environment me API nahi mili");
+                const errorData = await response.json();
+                throw new Error(errorData.reply || "Server Error");
             }
 
             const data = await response.json();
@@ -293,27 +284,33 @@ if (chatbotForm) {
 
             if (data && data.reply) {
                 appendMessage('bot', data.reply);
+                // Lead detection logic (Step 4 ke liye ready rakhein)
+                checkIfLead(userMessage);
             } else {
-                appendMessage('bot', "Sorry, main abhi samajh nahi pa raha hoon.");
+                appendMessage('bot', "Kshama karein, main abhi samajh nahi pa raha hoon.");
             }
 
         } catch (error) {
             console.error("Chatbot Error:", error);
             typingMsg.remove();
-            // Local machine par ye message dikhega
-            appendMessage('bot', "Main abhi offline hoon (Local Testing). Vercel par live hote hi Gemini shuru ho jayega!");
+            // Local machine ya backend error par ye dikhega
+            appendMessage('bot', "Connection issue. Agar aap local check kar rahe hain toh Vercel par deploy karein.");
         }
     });
 }
 
-// 3. Helper Function to add messages
+// 3. Helper Functions
 function appendMessage(sender, text) {
     const msgDiv = document.createElement('div');
     msgDiv.className = sender === 'user' ? 'user-message' : 'bot-message';
-    msgDiv.style.marginBottom = "10px";
-    msgDiv.style.padding = "10px";
-    msgDiv.style.borderRadius = "10px";
-    msgDiv.style.maxWidth = "80%";
+    msgDiv.style.cssText = `
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        max-width: 80%;
+        font-size: 14px;
+        line-height: 1.4;
+    `;
     
     if(sender === 'user') {
         msgDiv.style.backgroundColor = "#0ea5e9";
@@ -329,6 +326,15 @@ function appendMessage(sender, text) {
     chatbotMessages.appendChild(msgDiv);
     chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     return msgDiv;
+}
+
+// Naya lead detection function
+function checkIfLead(text) {
+    const phoneRegex = /[6-9][0-9]{9}/;
+    if (phoneRegex.test(text)) {
+        console.log("Potential Lead Detected:", text);
+        // Yahan EmailJS trigger karenge baad mein
+    }
 }
 // =============request demo modal logic form submite success msg==================
 
