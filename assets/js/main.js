@@ -234,7 +234,8 @@ faqItems.forEach(item => {
    CHATBOT FULL LOGIC (TOGGLE + GEMINI FETCH)
    ========================================================================== */
 // main.js - Full Updated Code
-window.initChatbot = function () { console.log("Pingvia Chatbot Initialized!"); };
+// Browser error fix
+window.initChatbot = function() { console.log("Pingvia Chatbot Live!"); };
 window.initChatbot();
 
 const chatbotToggle = document.getElementById('chatbot-toggle');
@@ -244,19 +245,15 @@ const chatbotInput = document.getElementById('chatbot-input');
 const chatbotMessages = document.querySelector('.chatbot-messages');
 const chatbotClose = document.getElementById('chatbot-close');
 
-// 1. Open/Close Logic
 if (chatbotToggle && chatbotWindow) {
     chatbotToggle.addEventListener('click', () => {
         chatbotWindow.style.display = (chatbotWindow.style.display === 'flex') ? 'none' : 'flex';
     });
 }
 if (chatbotClose && chatbotWindow) {
-    chatbotClose.addEventListener('click', () => {
-        chatbotWindow.style.display = 'none';
-    });
+    chatbotClose.addEventListener('click', () => chatbotWindow.style.display = 'none');
 }
 
-// 2. Message Sending
 if (chatbotForm) {
     chatbotForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -265,7 +262,7 @@ if (chatbotForm) {
 
         appendMessage('user', userMessage);
         chatbotInput.value = '';
-        const typingMsg = appendMessage('bot', 'Thinking...');
+        const typingMsg = appendMessage('bot', 'Typing...');
 
         try {
             const response = await fetch('/api/chat', {
@@ -280,23 +277,21 @@ if (chatbotForm) {
             if (data && data.reply) {
                 appendMessage('bot', data.reply);
             } else {
-                appendMessage('bot', "Technical issue, please try again.");
+                appendMessage('bot', "Kshama karein, server response nahi de raha.");
             }
         } catch (error) {
             typingMsg.remove();
-            appendMessage('bot', "Connection error. Please check if deployed on Vercel.");
-            console.error("Chatbot Error:", error);
+            appendMessage('bot', "Connection Error. Please try again.");
         }
     });
 }
 
-// 3. Helper to add messages
 function appendMessage(sender, text) {
     const msgDiv = document.createElement('div');
     msgDiv.className = sender === 'user' ? 'user-message' : 'bot-message';
-    msgDiv.style.cssText = `margin-bottom:10px; padding:10px; border-radius:10px; max-width:80%; font-size:14px;`;
-
-    if (sender === 'user') {
+    msgDiv.style.cssText = "margin-bottom:10px; padding:12px; border-radius:12px; max-width:85%; font-size:14px; line-height:1.5;";
+    
+    if(sender === 'user') {
         msgDiv.style.backgroundColor = "#0ea5e9";
         msgDiv.style.color = "white";
         msgDiv.style.alignSelf = "flex-end";
@@ -311,6 +306,8 @@ function appendMessage(sender, text) {
     chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     return msgDiv;
 }
+
+
 // =============request demo modal logic form submite success msg==================
 
 // 1. Elements Selection
