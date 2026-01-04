@@ -1,9 +1,3 @@
-import OpenAI from "openai";
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ reply: "Only POST allowed" });
@@ -11,18 +5,36 @@ export default async function handler(req, res) {
 
   try {
     const { message } = req.body;
+    const API_KEY = process.env.OPENAI_API_KEY;
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [{ role: "user", content: message }],
-    });
+    const response = await fetch(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          messages: [{ role: "user", content: message }],
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("OpenAI Error:", data);
+      return res.status(500).json({ reply: "OpenAI API failed" });
+    }
 
     return res.status(200).json({
-      reply: completion.choices[0].message.content,
+      reply: data.choices[0].message.content,
     });
 
   } catch (err) {
-    console.error("OpenAI Error:", err);
-    return res.status(500).json({ reply: "OpenAI API failed" });
+    console.error(err);
+    return res.status(500).json({ reply: "Server error" });
   }
 }
