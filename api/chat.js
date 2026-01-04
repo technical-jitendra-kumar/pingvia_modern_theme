@@ -42,3 +42,5 @@ export default async function handler(req) {
     return new Response(JSON.stringify({ reply: "Backend Crash: " + err.message }), { status: 500 });
   }
 }
+
+window.initChatbot = function() { console.log("Chatbot ready!"); };
