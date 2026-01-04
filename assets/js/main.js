@@ -250,6 +250,15 @@ if (chatbotToggle && chatbotWindow) {
         }
     });
 }
+const chatbotClose = document.getElementById('chatbot-close');
+
+// Close button logic
+if (chatbotClose && chatbotWindow) {
+    chatbotClose.addEventListener('click', () => {
+        chatbotWindow.style.display = 'none';
+    });
+}
+
 
 // 2. Message Sending & Gemini API Call
 if (chatbotForm) {
